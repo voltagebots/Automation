@@ -1,0 +1,24 @@
+import json
+from urllib.request import Request, urlopen
+from urllib.parse import urlencode
+
+def lambda_handler(event, context):
+
+    webhook_url = "https://hooks.slack.com/services/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"
+
+    slack_data = {
+        'channel': 'alarms',
+        'text':'this is a simple test alert'
+    }
+
+    request = Request(
+        webhook_url,
+        data=json.dumps(slack_data).encode(),
+        headers={'Content-Type': 'application/json'}
+    )
+    response = urlopen(request)
+
+    return {
+        'statusCode': response.getcode(),
+        'body': response.read().decode()
+    }

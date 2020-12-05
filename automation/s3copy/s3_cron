@@ -1,0 +1,26 @@
+import json
+import boto3
+
+import json
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
+
+# boto3 S3 initialization
+s3_client = boto3.client("s3", region_name='us-east-2')
+s3_resource = boto3.resource("s3", region_name='us-east-2')
+
+strings = ["s3mancopy", "aws-sam-cli-managed-default-samclisourcebucket-1mtkt7u7snnlb"]
+#response = s3_client.get_objects(strings)
+#print (response)
+
+def lambda_handler(event, context):
+    result = s3_client.list_buckets()
+    
+    for bucket in result['Buckets']:
+        Name = list(bucket["Name"].split(" "))
+        #print (Name)
+        if Name[0] in strings:
+            #print (bucket["Name"])
+            bucket = s3_resource.Bucket(bucket)
+            print (bucket)
+

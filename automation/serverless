@@ -1,0 +1,4 @@
+sls invoke -f hello -l
+
+#deploy entire stack
+sls deploy -v
